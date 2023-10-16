@@ -1,16 +1,27 @@
 import requests
-
+import base64
 # Define your base API URL
-BASE_URL = "http://localhost:8125"  # Replace with your actual base API URL
+BASE_URL = "https://4ae6-34-30-23-216.ngrok-free.app"  # Replace with your actual base API URL
+
+
+# Helper image utils
+def encode_image(image_path):
+    try:
+        with open(image_path, "rb") as i:
+            b64 = base64.b64encode(i.read())
+        return b64.decode("utf-8")
+    except Exception as e:
+        print(f"Error encoding image: {str(e)}")
+        return ""
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
     api_url = f"{BASE_URL}/inpaint_image"
+    image = encode_image(uploaded_image_path)
 
-    files = {"image": ("image.jpg", open(uploaded_image_path, "rb"), "image/jpeg")}
-    data = {"prompt": prompt, "coordinates": polygon_coordinates}
+    data = {"image": image,"prompt": prompt, "coordinates": polygon_coordinates}
 
     try:
-        response = requests.post(api_url, files=files, data=data)
+        response = requests.post(api_url, json=data)
 
         if response.status_code == 200:
             response_data = response.json()

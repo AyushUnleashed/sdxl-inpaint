@@ -1,40 +1,37 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi import FastAPI, Form, HTTPException
 from typing import List
 from PIL import Image
 from io import BytesIO
 import os
+from pydantic import BaseModel
 from inpaint_image import run_inpaint
-
+import base64
 app = FastAPI()
 
 # Heartbeat endpoint
 @app.get("/heartbeat")
 async def heartbeat():
     return {"status": "alive"}
+# Endpoint to process the base64-encoded image, prompt, and coordinates
 
-# Endpoint to process the image, prompt, and coordinates
+class InpaintRequest(BaseModel):
+    image: str
+    prompt: str
+    coordinates: List[List[int]]
+
+
 @app.post("/inpaint_image")
-async def inpaint_image(
-        image: UploadFile = File(...),
-        prompt: str = Form(...),
-        coordinates: List[List[int]] = Form(...)
-):
+async def inpaint_image(request: InpaintRequest):
     try:
-        # Validate the image file
-        if not image.filename.lower().endswith(('.jpg', '.jpeg', '.png')):
-            raise HTTPException(status_code=400, detail="Only image files (JPEG/PNG) are allowed.")
+        # Decode the base64-encoded image
+        img = decode_base64_image(request.image)
 
-        # Process the image here (e.g., call your inpainting function)
-        image_bytes = await image.read()
-        img = Image.open(BytesIO(image_bytes))
-
-        # Save the uploaded image to a temporary file
+        # Save the decoded image to a temporary file
         temp_image_path = "temp_image.jpg"
-        with open(temp_image_path, "wb") as temp_image_file:
-            temp_image_file.write(image_bytes)
+        img.save(temp_image_path)
 
         # Call the inpainting function
-        inpainted_image_path = run_inpaint(temp_image_path, prompt, coordinates)
+        inpainted_image_path = run_inpaint(temp_image_path, request.prompt, request.coordinates)
 
         # Read the inpainted image from the returned path
         inpainted_img = Image.open(inpainted_image_path)
@@ -47,14 +44,20 @@ async def inpaint_image(
         os.remove(temp_image_path)
 
         return {
-            "image_filename": image.filename,
-            "prompt": prompt,
-            "coordinates": coordinates,
+            "prompt": request.prompt,
+            "coordinates": request.coordinates,
             "inpainted_image": output_image_bytes.getvalue()
         }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Helper to decode input image
+def decode_base64_image(image_string):
+    base64_image = base64.b64decode(image_string)
+    buffer = BytesIO(base64_image)
+    image = Image.open(buffer)
+    return image
 
 if __name__ == "__main__":
     import uvicorn
