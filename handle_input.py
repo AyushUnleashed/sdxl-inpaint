@@ -1,7 +1,7 @@
 import requests
 
 # Define your base API URL
-BASE_URL = "http://your-api-url"  # Replace with your actual base API URL
+BASE_URL = "http://localhost:8125"  # Replace with your actual base API URL
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
     api_url = f"{BASE_URL}/inpaint_image"
