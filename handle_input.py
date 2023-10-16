@@ -32,9 +32,9 @@ def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
         return None
 
 def main():
-    polygon_coordinates = [[100, 100], [200, 100], [200, 200], [100, 200]]
-    prompt = "Inpaint the specified area."
-    uploaded_image_path = "your_image.jpg"
+    polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
+    prompt = "deadpool shooting with guns"
+    uploaded_image_path = "assets/sdxl-text2img.png"
 
     result = send_api_request(polygon_coordinates, prompt, uploaded_image_path)
     if result:
