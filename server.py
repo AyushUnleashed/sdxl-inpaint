@@ -19,6 +19,18 @@ class InpaintRequest(BaseModel):
     prompt: str
     coordinates: List[tuple[int, int]]  # Change this line
 
+
+# Helper image utils
+def encode_image(image_path):
+    try:
+        with open(image_path, "rb") as i:
+            b64 = base64.b64encode(i.read())
+        return b64.decode("utf-8")
+    except Exception as e:
+        print(f"Error encoding image: {str(e)}")
+        return ""
+
+
 @app.post("/inpaint_image")
 async def inpaint_image(request: InpaintRequest):
     try:
@@ -32,12 +44,14 @@ async def inpaint_image(request: InpaintRequest):
         # Call the inpainting function
         inpainted_image_path = run_inpaint(temp_image_path, request.prompt, request.coordinates)
 
-        # Read the inpainted image from the returned path
-        inpainted_img = Image.open(inpainted_image_path)
-
-        # Convert the inpainted image to bytes
-        output_image_bytes = BytesIO()
-        inpainted_img.save(output_image_bytes, format="PNG")
+        inpainted_image_encoded = encode_image(inpainted_image_path)
+        #
+        # # Read the inpainted image from the returned path
+        # inpainted_img = Image.open(inpainted_image_path)
+        #
+        # # Convert the inpainted image to bytes
+        # output_image_bytes = BytesIO()
+        # inpainted_img.save(output_image_bytes, format="PNG")
 
         # Clean up the temporary image file
         os.remove(temp_image_path)
@@ -45,7 +59,7 @@ async def inpaint_image(request: InpaintRequest):
         return {
             "prompt": request.prompt,
             "coordinates": request.coordinates,
-            "inpainted_image": output_image_bytes.getvalue()
+            "inpainted_image": inpainted_image_encoded
         }
 
     except Exception as e:
