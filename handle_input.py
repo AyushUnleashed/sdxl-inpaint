@@ -51,7 +51,8 @@ def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
         return None
 
 def main():
-    polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
+    # polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
+    polygon_coordinates = [[100, 100], [300, 100], [800, 200], [100, 800]]
     prompt = "deadpool shooting with guns"
     uploaded_image_path = "assets/sdxl-text2img.png"
 

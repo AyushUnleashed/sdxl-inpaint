@@ -45,14 +45,6 @@ async def inpaint_image(request: InpaintRequest):
         inpainted_image_path = run_inpaint(temp_image_path, request.prompt, request.coordinates)
 
         inpainted_image_encoded = encode_image(inpainted_image_path)
-        #
-        # # Read the inpainted image from the returned path
-        # inpainted_img = Image.open(inpainted_image_path)
-        #
-        # # Convert the inpainted image to bytes
-        # output_image_bytes = BytesIO()
-        # inpainted_img.save(output_image_bytes, format="PNG")
-
         # Clean up the temporary image file
         os.remove(temp_image_path)
 
