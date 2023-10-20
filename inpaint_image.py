@@ -11,20 +11,31 @@ inpaint_stength = 0.85
 
 pipe_inpaint = setup_pipeline(base_model_path = "stabilityai/stable-diffusion-xl-base-1.0")
 
-def inpaint_image(prompt ,init_image_path,mask_image_path,inpaint_request=None):
-    init_image = load_image(init_image_path) #.convert("RGB")
-    mask_image = load_image(mask_image_path) #.convert("RGB")
-    image = pipe_inpaint(prompt=prompt, image=init_image, mask_image=mask_image, strength=inpaint_stength, guidance_scale=guidance_scale,num_images_per_prompt=1,num_inference_steps=num_inference_steps).images[0]
-    final_image_path = "output.png"
-    image.save(final_image_path)
-    return final_image_path
+def inpaint_image(prompt, init_image_path, mask_image_path, inpaint_strength=None, guidance_scale=None, num_images_per_prompt=None, num_inference_steps=None):
+    try:
+        init_image = load_image(init_image_path)
+        mask_image = load_image(mask_image_path)
+        image = pipe_inpaint(prompt=prompt, image=init_image, mask_image=mask_image, strength=inpaint_strength, guidance_scale=guidance_scale, num_images_per_prompt=num_images_per_prompt, num_inference_steps=num_inference_steps).images[0]
+        final_image_path = "output.png"
+        image.save(final_image_path)
+        return final_image_path
+    except OSError as e:
+        print(f"Error inpainting the image: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
 
 def run_inpaint(init_image_path, prompt, coordinates):
-    init_image = load_image(init_image_path)
-    width, height = init_image.size
-    mask_image_path = create_mask(width, height, coordinates)
-    final_image_path = inpaint_image(prompt, init_image_path, mask_image_path)
-    return final_image_path
+    try:
+        init_image = load_image(init_image_path)
+        width, height = init_image.size
+        mask_image_path = create_mask(width, height, coordinates)
+        final_image_path = inpaint_image(prompt, init_image_path, mask_image_path)
+        return final_image_path
+    except OSError as e:
+        print(f"Error running inpainting: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 
 def main():

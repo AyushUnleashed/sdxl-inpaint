@@ -54,10 +54,16 @@ async def inpaint_image(request: InpaintRequest):
 
 # Helper to decode input image
 def decode_base64_image(image_string):
-    base64_image = base64.b64decode(image_string)
-    buffer = BytesIO(base64_image)
-    image = Image.open(buffer)
-    return image
+    try:
+        base64_image = base64.b64decode(image_string)
+        buffer = BytesIO(base64_image)
+        image = Image.open(buffer)
+        return image
+    except OSError as e:
+        print(f"Error opening image: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
 
 if __name__ == "__main__":
     import uvicorn

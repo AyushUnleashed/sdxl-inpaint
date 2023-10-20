@@ -1,12 +1,17 @@
 from PIL import Image, ImageDraw
 
 def create_mask(width, height, coordinates):
-    mask = Image.new('L', (width, height), 0)  # 'L' mode for grayscale
-    draw = ImageDraw.Draw(mask)
-    draw.polygon(coordinates, fill=255)  # 255 is white
-    mask_path = "assets/mask.png"
-    mask.save(mask_path)
-    return mask_path
+    try:
+        mask = Image.new('L', (width, height), 0)  # 'L' mode for grayscale
+        draw = ImageDraw.Draw(mask)
+        draw.polygon(coordinates, fill=255)  # 255 is white
+        mask_path = "assets/mask.png"
+        mask.save(mask_path)
+        return mask_path
+    except OSError as e:
+        print(f"Error creating the mask image: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 def main():
     width = 512

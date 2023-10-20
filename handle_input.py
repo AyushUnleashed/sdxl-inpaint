@@ -1,7 +1,7 @@
 import requests
 import base64
 # Define your base API URL
-BASE_URL = "https://4ae6-34-30-23-216.ngrok-free.app"  # Replace with your actual base API URL
+BASE_URL = "https://5460-34-82-92-35.ngrok-free.app"  # Replace with your actual base API URL
 
 
 # Helper image utils
@@ -43,11 +43,12 @@ def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
         return None
 
 def main():
-    polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
+    # polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
+    coordinates = [(100, 100), (300, 100), (300, 300), (100, 300)]
     prompt = "deadpool shooting with guns"
     uploaded_image_path = "assets/sdxl-text2img.png"
 
-    result = send_api_request(polygon_coordinates, prompt, uploaded_image_path)
+    result = send_api_request(coordinates, prompt, uploaded_image_path)
     if result:
         image_filename, prompt, coordinates = result
         print(f"Image Filename: {image_filename}")
