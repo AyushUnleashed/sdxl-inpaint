@@ -50,6 +50,7 @@ async def inpaint_image(request: InpaintRequest):
         }
 
     except Exception as e:
+        print(f"Exception occurred with error as {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # Helper to decode input image
