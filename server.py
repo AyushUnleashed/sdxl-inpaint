@@ -17,7 +17,7 @@ async def heartbeat():
 class InpaintRequest(BaseModel):
     image: str
     prompt: str
-    coordinates: List[List[int]]
+    coordinates: List[tuple[int]]
 
 
 @app.post("/inpaint_image")
