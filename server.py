@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from inpaint_image import run_inpaint
-from models.base_model import InpaintRequest
+from inpaint.inpaint_image import run_inpaint
+from models.inpaint_request_model import InpaintRequest
 
 app = FastAPI()
 

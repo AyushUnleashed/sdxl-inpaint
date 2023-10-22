@@ -1,8 +1,8 @@
 from setup_inpaint_pipeline import setup_pipeline
 from diffusers.utils import load_image
 from utils.create_mask import create_mask
-from models.base_model import InpaintRequest
-from utils.utils import decode_base64_image, encode_image
+from models.inpaint_request_model import InpaintRequest
+from utils.image_utils import decode_base64_image, encode_image
 
 # Define a global variable to track the loaded model path
 current_model_path = None
@@ -51,7 +51,7 @@ def run_inpaint(inpaint_request: InpaintRequest) -> str:
 
 def main():
     # generate mask
-    init_image_path = "assets/sdxl-text2img.png"
+    init_image_path = "../assets/sdxl-text2img.png"
     prompt = "deadpool shooting with guns"
     coordinates = [(100, 100), (800, 100), (800, 800), (100, 800)]
     # Create an instance of InpaintRequest

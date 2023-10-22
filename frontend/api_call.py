@@ -1,14 +1,14 @@
 import requests
 import os
 from dotenv import load_dotenv
-from utils.utils import decode_base64_image, encode_image
-from utils import base_models_list
+from frontend_utils.image_utils import decode_base64_image, encode_image
+from frontend_utils import base_models_list
 
 # Load environment variables from the .env file
 load_dotenv()
 
 # Base API URL
-BASE_URL = os.getenv("BASE_URL") or ""
+BASE_URL = os.getenv("BASE_URL") or "https://c7ea-104-198-21-140.ngrok-free.app"
 
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_XL):
@@ -42,7 +42,7 @@ def main():
     # polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
     polygon_coordinates = [[100, 100], [300, 100], [800, 200], [100, 800]]
     prompt = "deadpool shooting with guns"
-    uploaded_image_path = "assets/sdxl-text2img.png"
+    uploaded_image_path = "../assets/sdxl-text2img.png"
 
     result = send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_15)
     if result:
