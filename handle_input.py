@@ -2,22 +2,22 @@ import requests
 import os
 from dotenv import load_dotenv
 from utils.utils import decode_base64_image, encode_image
-# Base API URL
 
-
-# # Load environment variables from the .env file
+# Load environment variables from the .env file
 load_dotenv()
 
-# # Get the BASE_URL from an environment variable
-BASE_URL = os.getenv("BASE_URL") or "https://fbcd-34-32-160-52.ngrok-free.app"
+# Base API URL
+BASE_URL = os.getenv("BASE_URL") or ""
 
-
+SD_15 = "runwayml/stable-diffusion-v1-5"
+SD_21 = "stabilityai/stable-diffusion-2"
+SD_XL = "stabilityai/stable-diffusion-xl-base-1.0"
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
     api_url = f"{BASE_URL}/inpaint_image"
     encoded_image= encode_image(uploaded_image_path)
 
-    data = {"encoded_image": encoded_image,"prompt": prompt, "coordinates": polygon_coordinates}
+    data = {"encoded_image": encoded_image,"prompt": prompt, "coordinates": polygon_coordinates,"base_model": SD_15}
 
     try:
         response = requests.post(api_url, json=data)
@@ -47,7 +47,6 @@ def main():
     result = send_api_request(polygon_coordinates, prompt, uploaded_image_path)
     if result:
         inpainted_image, prompt, coordinates = result
-        # print(f"Image Filename: {image_filename}")
         print(f"Prompt: {prompt}")
         print(f"Coordinates: {coordinates}")
 
