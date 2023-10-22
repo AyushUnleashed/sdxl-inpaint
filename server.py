@@ -32,6 +32,7 @@ async def inpaint_image(base_request: InpaintRequest):
         inpaint_request = base_request.copy(deep=True)
 
         print(f"This is the inpaint request:\n {inpaint_request}")
+        print(f"\n\nThis is the base request:\n {base_request}")
 
         # Call the inpainting function
         inpainted_image_encoded = run_inpaint(inpaint_request)
