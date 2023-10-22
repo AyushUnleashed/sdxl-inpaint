@@ -8,7 +8,7 @@ from frontend_utils import base_models_list
 load_dotenv()
 
 # Base API URL
-BASE_URL = os.getenv("BASE_URL") or "https://c7ea-104-198-21-140.ngrok-free.app"
+BASE_URL = os.getenv("BASE_URL") or "https://0bbd-34-125-138-87.ngrok-free.app"
 
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_XL):
@@ -27,7 +27,7 @@ def send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_mode
             prompt = response_data["prompt"]
             coordinates = response_data["coordinates"]
             inpainted_image_pil = decode_base64_image(response_data["inpainted_image"])
-            inpainted_image_pil.save("assets/server_output.png")
+            inpainted_image_pil.save("server_output.png")
 
             return inpainted_image_pil, prompt, coordinates
         else:

@@ -36,7 +36,7 @@ if uploaded_image is not None:
 
     image = resize_image(image,max_width=1024,max_height=1024)
     st.image(image, caption="Uploaded Image", use_column_width=True)
-    uploaded_image_path = "assets/uploaded_image.png"
+    uploaded_image_path = "uploaded_image.png"
     image.save(uploaded_image_path, "PNG")
 
     polygon_coordinates = [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
