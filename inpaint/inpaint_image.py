@@ -1,4 +1,4 @@
-from setup_inpaint_pipeline import setup_pipeline
+from inpaint.setup_inpaint_pipeline import setup_pipeline
 from diffusers.utils import load_image
 from utils.create_mask import create_mask
 from models.inpaint_request_model import InpaintRequest

@@ -1,8 +1,8 @@
 import streamlit as st
 from PIL import Image, ImageDraw
-from frontend.frontend_utils import base_models_list
+from frontend_utils import base_models_list
 from api_call import send_api_request
-from frontend.frontend_utils.resize_image import resize_image
+from frontend_utils.resize_image import resize_image
 
 # Define the Streamlit app
 st.title("Inpaint Image ")
