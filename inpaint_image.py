@@ -3,16 +3,27 @@ from diffusers.utils import load_image
 from create_mask import create_mask
 from models.base_model import InpaintRequest
 from utils.utils import decode_base64_image, encode_image
-# width = 1024
-# height = 1024
 
-# guidance_scale = 7.5
-# num_inference_steps = 30
-# inpaint_stength = 0.85
+# Define a global variable to track the loaded model path
+current_model_path = None
+pipe_inpaint = None
 
-pipe_inpaint = setup_pipeline(base_model_path = "stabilityai/stable-diffusion-xl-base-1.0")
+# pipe_inpaint = setup_pipeline(base_model_path = "stabilityai/stable-diffusion-xl-base-1.0")
+def load_pipeline(model_path):
+    global current_model_path, pipe_inpaint
+    if current_model_path != model_path:
+        # Load the pipeline only if the model path has changed
+        pipe_inpaint = setup_pipeline(base_model_path=model_path)
+        current_model_path = model_path
+        print(f"\nChanging model to {model_path}\n")
+
+
 
 def inpaint_image(inpaint_request: InpaintRequest):
+
+    # Load the pipeline based on the model path in the request
+    load_pipeline(inpaint_request.base_model)
+
     # Decode the base64-encoded image
     init_image = decode_base64_image(inpaint_request.encoded_image)
     width, height = init_image.size
