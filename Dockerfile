@@ -7,7 +7,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY server.py .
+# copy all contents of current folder to /workspace in the container
+COPY . .
 
 EXPOSE $SERVING_PORT
 
