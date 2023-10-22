@@ -5,7 +5,7 @@ from PIL import Image
 
 # Base API URL
 
-BASE_URL = "https://452b-34-82-92-35.ngrok-free.app"  # Replace with your actual base API URL
+BASE_URL = "http://ec2-3-7-69-253.ap-south-1.compute.amazonaws.com:8125" # Replace with your actual base API URL
 
 
 # Helper image utils

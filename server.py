@@ -6,6 +6,7 @@ import os
 from pydantic import BaseModel
 from inpaint_image import run_inpaint
 import base64
+from typing import List, Tuple
 app = FastAPI()
 
 # Heartbeat endpoint
@@ -17,7 +18,7 @@ async def heartbeat():
 class InpaintRequest(BaseModel):
     image: str
     prompt: str
-    coordinates: List[tuple[int, int]]  # Change this line
+    coordinates: List[Tuple[int, int]]  # Change this line
 
 
 # Helper image utils
