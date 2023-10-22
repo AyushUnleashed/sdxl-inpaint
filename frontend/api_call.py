@@ -8,7 +8,7 @@ from frontend_utils import base_models_list
 load_dotenv()
 
 # Base API URL
-BASE_URL = os.getenv("BASE_URL") or "https://0bbd-34-125-138-87.ngrok-free.app"
+BASE_URL = os.getenv("BASE_URL") or "http://localhost:8152"
 
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_XL):
