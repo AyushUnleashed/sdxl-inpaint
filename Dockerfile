@@ -14,6 +14,8 @@ EXPOSE $SERVING_PORT
 
 CMD ["python", "server.py", "--serving-port", "$SERVING_PORT"]
 
+#build using
+# docker build -t stable-diffusion-server .
 
 # run using
 # docker run -p 8125:8125 --gpus=all stable-diffusion-server
