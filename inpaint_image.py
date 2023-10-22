@@ -1,6 +1,6 @@
 from setup_inpaint_pipeline import setup_pipeline
 from diffusers.utils import load_image
-from create_mask import create_mask
+from utils.create_mask import create_mask
 from models.base_model import InpaintRequest
 from utils.utils import decode_base64_image, encode_image
 

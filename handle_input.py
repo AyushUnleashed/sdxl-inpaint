@@ -2,6 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from utils.utils import decode_base64_image, encode_image
+from utils import base_models_list
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -9,15 +10,13 @@ load_dotenv()
 # Base API URL
 BASE_URL = os.getenv("BASE_URL") or ""
 
-SD_15 = "runwayml/stable-diffusion-v1-5"
-SD_21 = "stabilityai/stable-diffusion-2"
-SD_XL = "stabilityai/stable-diffusion-xl-base-1.0"
 
-def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
+def send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_XL):
     api_url = f"{BASE_URL}/inpaint_image"
-    encoded_image= encode_image(uploaded_image_path)
+    encoded_image = encode_image(uploaded_image_path)
 
-    data = {"encoded_image": encoded_image,"prompt": prompt, "coordinates": polygon_coordinates,"base_model": SD_15}
+    data = {"encoded_image": encoded_image, "prompt": prompt, "coordinates": polygon_coordinates,
+            "base_model": base_model}
 
     try:
         response = requests.post(api_url, json=data)
@@ -38,17 +37,19 @@ def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
         print(f"Request Exception: {e}")
         return None
 
+
 def main():
     # polygon_coordinates = [[100, 100], [800, 100], [800, 800], [100, 800]]
     polygon_coordinates = [[100, 100], [300, 100], [800, 200], [100, 800]]
     prompt = "deadpool shooting with guns"
     uploaded_image_path = "assets/sdxl-text2img.png"
 
-    result = send_api_request(polygon_coordinates, prompt, uploaded_image_path)
+    result = send_api_request(polygon_coordinates, prompt, uploaded_image_path, base_model=base_models_list.SD_15)
     if result:
         inpainted_image, prompt, coordinates = result
         print(f"Prompt: {prompt}")
         print(f"Coordinates: {coordinates}")
+
 
 if __name__ == "__main__":
     main()

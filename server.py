@@ -14,8 +14,6 @@ async def heartbeat():
 async def inpaint_image(base_request: InpaintRequest):
     try:
 
-        # print(f"\n\nThis is the base request:\n {base_request}")
-
         # Call the inpainting function
         inpainted_image_encoded = run_inpaint(base_request)
 
