@@ -1,35 +1,23 @@
 import requests
-import base64
-from io import BytesIO
-from PIL import Image
-
+import os
+from dotenv import load_dotenv
+from utils.utils import decode_base64_image, encode_image
 # Base API URL
 
-BASE_URL = "http://ec2-3-7-69-253.ap-south-1.compute.amazonaws.com:8125" # Replace with your actual base API URL
+
+# # Load environment variables from the .env file
+load_dotenv()
+
+# # Get the BASE_URL from an environment variable
+BASE_URL = os.getenv("BASE_URL") or ""
 
 
-# Helper image utils
-def encode_image(image_path):
-    try:
-        with open(image_path, "rb") as i:
-            b64 = base64.b64encode(i.read())
-        return b64.decode("utf-8")
-    except Exception as e:
-        print(f"Error encoding image: {str(e)}")
-        return ""
-
-# Helper to decode input image
-def decode_base64_image(image_string):
-    base64_image = base64.b64decode(image_string)
-    buffer = BytesIO(base64_image)
-    image = Image.open(buffer)
-    return image
 
 def send_api_request(polygon_coordinates, prompt, uploaded_image_path):
     api_url = f"{BASE_URL}/inpaint_image"
-    image = encode_image(uploaded_image_path)
+    encoded_image= encode_image(uploaded_image_path)
 
-    data = {"image": image,"prompt": prompt, "coordinates": polygon_coordinates}
+    data = {"encoded_image": encoded_image,"prompt": prompt, "coordinates": polygon_coordinates}
 
     try:
         response = requests.post(api_url, json=data)
