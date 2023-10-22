@@ -29,7 +29,7 @@ async def inpaint_image(base_request: InpaintRequest):
             raise HTTPException(status_code=400, detail="Required fields are missing in the request.")
 
         # Create an InpaintRequest object with values from the base_request
-        inpaint_request = base_request.model_copy(deep=True)
+        inpaint_request = base_request.copy(deep=True)
 
         print(f"This is the inpaint request:\n {inpaint_request}")
 

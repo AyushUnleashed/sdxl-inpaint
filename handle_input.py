@@ -9,7 +9,7 @@ from utils.utils import decode_base64_image, encode_image
 load_dotenv()
 
 # # Get the BASE_URL from an environment variable
-BASE_URL = os.getenv("BASE_URL") or ""
+BASE_URL = os.getenv("BASE_URL") or "https://fbcd-34-32-160-52.ngrok-free.app"
 
 
 
