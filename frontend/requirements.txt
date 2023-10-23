@@ -1,0 +1,4 @@
+Pillow
+streamlit
+requests
+python-dotenv
