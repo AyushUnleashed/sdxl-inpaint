@@ -151,12 +151,20 @@ docker run -p 8125:8125 --gpus all stable-diffusion-server
 
 The first time you run this command, it may take some time to download the necessary dependencies and data.
 
-##  Run the Frontend
+## Running the Frontend
 
-* You can use same requirements.txt file for installation.
+To run the frontend part of your project, follow these steps:
 
-After completing the backend setup, you can run the frontend part of your project using Streamlit. Make sure you are in the root directory of the project (sdxl-inpaint). Open a terminal and navigate to the frontend directory:
+1. First, make sure you have completed the backend setup.
 
+2. Open your terminal and navigate to the root directory of your project (sdxl-inpaint).
+
+3. To install the required Python packages for the frontend, use the following command. This command will read the `requirements.txt` file in the frontend directory and install the specified packages:
+
+   ```bash
+   pip install -r frontend/requirements.txt
+   ```
+   
 Then, you can use the following command to run your Streamlit app:
 
 ```bash
