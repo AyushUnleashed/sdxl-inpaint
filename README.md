@@ -89,9 +89,11 @@ Below are the screenshots from our Streamlit app along with explanations for eac
 
    ![Step 5](assets/sd_5.png)
 
-   As you can see in this final screenshot, the inpainting process is complete, and the image now displays the inpainted area, seamlessly integrating with the rest of the image.
+As you can see in this final screenshot, the inpainting process is complete, and the image now displays the inpainted area.
 
-These are the sequential steps in our Streamlit app, which allows you to inpaint images effectively.## Environment Variables
+These are the sequential steps in our Streamlit app, which allows you to inpaint images effectively.
+
+## Environment Variables
 
 Before running this project, you'll need to set the following environment variable in your `.env` file.
 
